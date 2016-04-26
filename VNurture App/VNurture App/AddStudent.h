@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *textFieldUsername;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldPassword;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldPhone;
+@property (weak, nonatomic) IBOutlet UITextField *textFieldParentNo;
 
 - (IBAction)buttonSubmit:(id)sender;
 - (IBAction)buttonCancel:(id)sender;

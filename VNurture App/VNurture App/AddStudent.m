@@ -255,6 +255,37 @@
     
       if (((self.textFieldName.text.length > 0) && (self.textFieldDate.text.length>0)) && (self.textFieldDOB.text.length>0) && (self.textFieldEmailId.text.length>0)
           && (self.textFieldGender.text.length>0) && (self.textFieldPassword.text.length>0)  &&  (self.textFieldPhone.text.length>0) && (self.textFieldUsername.text.length>0) && (self.textFieldTechnology.text.length>0) ) {
+          NSError *error;
+          
+          NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+          NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:configuration delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+          
+          NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/userinsert.php"];
+          NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                                 cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                             timeoutInterval:60.0];
+          
+          //[request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+          //[request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+          
+          [request setHTTPMethod:@"POST"];
+          
+          NSArray *data = [NSArray arrayWithObjects:_textFieldName.text,_textFieldDOB.text,_textFieldEmailId.text,_textFieldGender.text,_textFieldPassword.text,_textFieldPhone.text,_textViewAddress.text,_textFieldParentNo.text,@"Student" ,nil];
+          NSArray *key=[NSArray arrayWithObjects:@"firstname",@"dob",@"email",@"gender",@"password",@"phone",@"address",@"parentno",@"role", nil];
+          
+          
+          
+          NSDictionary *studentData=[NSDictionary dictionaryWithObjects:data forKeys:key];
+          NSData *postData = [NSJSONSerialization dataWithJSONObject:studentData options:0 error:&error];
+          [request setHTTPBody:postData];
+          
+          
+          NSURLSessionDataTask *postDataTask = [defaultSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+              
+          }];
+          
+          [postDataTask resume];
+          
           NSLog(@"Checked");
           
       }

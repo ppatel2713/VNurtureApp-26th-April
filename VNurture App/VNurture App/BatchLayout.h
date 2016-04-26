@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BatchLayout : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface BatchLayout : UIViewController<UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate>
 
 {
     
     NSMutableArray *my_array;
     UITableViewCell *cell;
+    NSDictionary *json;
     
 }
 @property (weak, nonatomic) IBOutlet UITableView *batch_table;

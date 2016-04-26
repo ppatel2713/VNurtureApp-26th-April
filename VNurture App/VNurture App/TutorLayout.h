@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TutorLayout : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface TutorLayout : UIViewController<UITableViewDataSource,UITableViewDelegate,NSURLSessionDelegate>
 {
     NSMutableArray *my_array;
     UITableViewCell *cell;
+    NSDictionary *json;
+
 }
 @property (weak, nonatomic) IBOutlet UITableView *tutor_table;
 

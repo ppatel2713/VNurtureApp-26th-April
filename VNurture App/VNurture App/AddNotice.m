@@ -136,6 +136,40 @@
     
     
     if (((self.textFieldDate.text.length > 0) && (self.textFieldTime.text.length>0)) && (self.textViewNotice.text.length>0)) {
+        NSError *error;
+        
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:configuration delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/noticeinsert.php"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                               cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                           timeoutInterval:60.0];
+        
+        //[request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        //[request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        
+        [request setHTTPMethod:@"POST"];
+        
+        NSArray *data=[NSArray arrayWithObjects:_textViewNotice.text,nil];
+        NSArray *key=[NSArray arrayWithObjects:@"noticeContent", nil];
+        
+        
+        
+        NSDictionary *noticeData=[NSDictionary dictionaryWithObjects:data forKeys:key];
+        
+        NSLog(@"Notice Data%@",noticeData);
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:noticeData options:0 error:&error];
+        [request setHTTPBody:postData];
+        
+        
+        NSURLSessionDataTask *postDataTask = [defaultSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
+        }];
+        
+        [postDataTask resume];
+        NSLog(@"Checked");
+        
         NSLog(@"Checked");
         
     }

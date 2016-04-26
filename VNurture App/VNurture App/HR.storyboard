@@ -288,6 +288,7 @@
                         <outlet property="textFieldEmailId" destination="VXm-8J-vfi" id="vSu-TV-iDV"/>
                         <outlet property="textFieldGender" destination="260-9B-tlL" id="wnQ-QV-52l"/>
                         <outlet property="textFieldName" destination="Vyv-XD-hTm" id="iuL-1j-xPI"/>
+                        <outlet property="textFieldParentNo" destination="1qQ-Sz-8Tk" id="OGS-wR-bTu"/>
                         <outlet property="textFieldPassword" destination="Cyw-uH-cgi" id="iV1-Fd-GXV"/>
                         <outlet property="textFieldPhone" destination="8U3-YR-3ti" id="Azj-iy-FNZ"/>
                         <outlet property="textFieldTechnology" destination="5gP-jI-3W8" id="CAX-05-m4T"/>

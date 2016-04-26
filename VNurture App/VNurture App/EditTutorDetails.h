@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *textFieldDate;
 @property (weak, nonatomic) IBOutlet UIView *viewEditTutor;
 @property (weak, nonatomic) IBOutlet UITextField *textFieldTechnology;
+@property(weak,nonatomic) NSString *id1;
 - (IBAction)replyEditTutor:(id)sender;
 
 @end

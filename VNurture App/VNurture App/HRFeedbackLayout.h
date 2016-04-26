@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HRFeedbackLayout : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface HRFeedbackLayout : UIViewController<UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate>
 
 {
     NSMutableArray *my_array;
     UITableViewCell *cell;
+    NSDictionary *json;
     
 }
 

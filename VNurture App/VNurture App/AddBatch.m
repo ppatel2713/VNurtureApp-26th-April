@@ -211,6 +211,39 @@
 }
 - (IBAction)buttonSend:(id)sender {
     if (((self.textFieldBatchName.text.length > 0) && (self.textFieldDate.text.length>0)) && (self.textFieldTime.text.length>0) && (self.textFieldTechnology.text.length>0) && (self.textFieldTutorName.text.length>0) ) {
+        NSError *error;
+        
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:configuration delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/batchinsert.php"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                               cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                           timeoutInterval:60.0];
+        
+        //[request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        //[request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        
+        [request setHTTPMethod:@"POST"];
+        
+        NSArray *data=[NSArray arrayWithObjects:_textFieldBatchName.text,_textFieldDate.text,_textFieldTime.text,nil];
+        NSArray *key=[NSArray arrayWithObjects:@"batchname",@"date",@"batchstarttime", nil];
+        
+        
+        
+        NSDictionary *batchData=[NSDictionary dictionaryWithObjects:data forKeys:key];
+        
+        NSLog(@"Batch Data%@",batchData);
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:batchData options:0 error:&error];
+        [request setHTTPBody:postData];
+        
+        
+        NSURLSessionDataTask *postDataTask = [defaultSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
+        }];
+        
+        [postDataTask resume];
+        
         NSLog(@"Checked");
         
     }

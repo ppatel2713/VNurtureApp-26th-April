@@ -8,6 +8,7 @@
 
 #import "TutorLayout.h"
 #import "EditTutorDetails.h"
+
 @interface TutorLayout ()
 
 @end
@@ -20,7 +21,43 @@
     self.navigationController.navigationBarHidden = true;
     _tutor_table.dataSource = self;
     _tutor_table.delegate = self;
-    my_array=[[NSMutableArray alloc]initWithObjects:@"Vihas Shah",@"Mihir Mehta",@"Shyam Chawda",@"Ketan Panchal",@"Mehul Panchal",nil];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/tutorallfetch.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    
+    
+    NSString * post =[NSString stringWithFormat:@"lang=%@",@"English"];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO	];
+    
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"Json%@",json);
+        my_array=[json valueForKeyPath:@"tutors.firstname"];
+        
+        NSLog(@"dictionary data%@",my_array);
+        [self.tutor_table reloadData];
+        
+        
+    }];
+    
+    [postDataTask resume];
+
+    
+   // my_array=[[NSMutableArray alloc]initWithObjects:@"Vihas Shah",@"Mihir Mehta",@"Shyam Chawda",@"Ketan Panchal",@"Mehul Panchal",nil];
     // Do any additional setup after loading the view.
 }
 
@@ -31,6 +68,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return my_array.count;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    EditTutorDetails *EditTutorDetails1 = [[EditTutorDetails alloc] init];
+    NSLog(@"Karannn%@",indexPath);
+   // EditTutorDetails1.id1 = ;
+    //[self pushViewController:viewControllerB animated:YES];
+
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

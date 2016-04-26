@@ -19,7 +19,41 @@
     self.navigationController.navigationBarHidden = true;
     _batch_table.dataSource=self;
     _batch_table.delegate=self;
-    my_array=[[NSMutableArray alloc]initWithObjects:@"iOS Batch",@".NET Batch",@"php Batch",@"iOS New Summer Batch" ,@"Anroid batch",nil];
+    //my_array=[[NSMutableArray alloc]initWithObjects:@"iOS Batch",@".NET Batch",@"php Batch",@"iOS New Summer Batch" ,@"Anroid batch",nil];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/batchallfetch.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    
+    
+    NSString * post =[NSString stringWithFormat:@"lang=%@",@"English"];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO	];
+    
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"Json%@",json);
+        my_array=[json valueForKeyPath:@"batch.batchname"];
+        
+        NSLog(@"dictionary data%@",my_array);
+        [self.batch_table reloadData];
+        
+        
+    }];
+    
+    [postDataTask resume];
+
 
     // Do any additional setup after loading the view.
 }

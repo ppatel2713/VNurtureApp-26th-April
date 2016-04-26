@@ -22,7 +22,44 @@
     self.navigationController.navigationBarHidden = true;
     self.student_table.dataSource=self;
     _student_table.delegate=self;
-    my_array=[[NSMutableArray alloc]initWithObjects:@"Prachi Patel",@"Kruti Chauhan",@"Kush Patel",@"Monika Punjabi",@"Dharati Patel" ,@"Karan Shah",@"Ashay Patel",nil];
+    
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/studentallfetch.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    
+    
+    NSString * post =[NSString stringWithFormat:@"lang=%@",@"English"];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO	];
+    
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"Json%@",json);
+        my_array=[json valueForKeyPath:@"students.firstname"];
+        
+        NSLog(@"dictionary data%@",my_array);
+        [self.student_table reloadData];
+        
+        
+    }];
+    
+    [postDataTask resume];
+
+    
+   // my_array=[[NSMutableArray alloc]initWithObjects:@"Prachi Patel",@"Kruti Chauhan",@"Kush Patel",@"Monika Punjabi",@"Dharati Patel" ,@"Karan Shah",@"Ashay Patel",nil];
        // Do any additional setup after loading the view.
 }
 

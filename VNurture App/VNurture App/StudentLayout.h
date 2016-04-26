@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StudentLayout : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface StudentLayout : UIViewController<UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate>
 {
     
     NSMutableArray *my_array;
     UITableViewCell *cell;
+    NSDictionary *json;
 
 }
 @property (weak, nonatomic) IBOutlet UITableView *student_table;
