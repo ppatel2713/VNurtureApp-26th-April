@@ -1,0 +1,131 @@
+//
+//  TutorAddNoticeViewController.m
+//  VNurture App
+//
+//  Created by Mehul Panchal on 18/04/16.
+//  Copyright (c) 2016 Appuno IT Solutions. All rights reserved.
+//
+
+#import "TutorAddNoticeViewController.h"
+
+@interface TutorAddNoticeViewController ()
+
+@end
+
+@implementation TutorAddNoticeViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navigationController.navigationBarHidden = true;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:_viewTutorAddNotice.frame];
+    [imageView setImage:[UIImage imageNamed:@"bg.png"]];
+    [imageView setContentMode:UIViewContentModeScaleToFill];
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [_viewTutorAddNotice addSubview:imageView];
+    [_viewTutorAddNotice sendSubviewToBack:imageView];
+    self.textFieldDate.delegate = self;
+    self.textFieldTime.delegate=self;
+   // self.textViewNotice.delegate = self;
+    datePickerAddNotice=[[UIDatePicker alloc] initWithFrame:CGRectZero];
+    [datePickerAddNotice setDatePickerMode:UIDatePickerModeDate];
+    [datePickerAddNotice addTarget:self action:@selector(dateIsChanged:) forControlEvents:UIControlEventValueChanged];
+    timePickerAddNotice=[[UIDatePicker alloc] initWithFrame:CGRectZero];
+    [timePickerAddNotice setDatePickerMode:UIDatePickerModeTime];
+    [timePickerAddNotice addTarget:self action:@selector(timeIsChanged:) forControlEvents:UIControlEventValueChanged];
+    UIToolbar *doneBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [doneBar setBarStyle:UIBarStyleBlackTranslucent];
+    
+    UIBarButtonItem *btn_cancel = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Cancel"
+                                   style:UIBarButtonItemStyleDone
+                                   target:self
+                                   action:@selector(act_cancel:)];
+    
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    
+    [doneBar setItems: [NSArray arrayWithObjects:btn_cancel,flexSpace, [[UIBarButtonItem alloc]
+                                                                        initWithTitle:@"Done"
+                                                                        style:UIBarButtonItemStyleDone
+                                                                        target:self
+                                                                        action:@selector(act_done:)],nil ] animated:YES];
+    UIToolbar *doneBarTime = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [doneBarTime setBarStyle:UIBarStyleBlackTranslucent];
+    
+    UIBarButtonItem *btn_cancelTime = [[UIBarButtonItem alloc]
+                                       initWithTitle:@"Cancel"
+                                       style:UIBarButtonItemStyleDone
+                                       target:self
+                                       action:@selector(act_cancelTime:)];
+    
+    UIBarButtonItem *flexSpaceTime = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    
+    [doneBarTime setItems: [NSArray arrayWithObjects:btn_cancelTime,flexSpaceTime, [[UIBarButtonItem alloc]
+                                                                                    initWithTitle:@"Done"
+                                                                                    style:UIBarButtonItemStyleDone
+                                                                                    target:self
+                                                                                    action:@selector(act_doneTime:)],nil ] animated:YES];
+    _textFieldDate.inputView = datePickerAddNotice;
+    [_textFieldDate setInputAccessoryView:doneBar];
+    _textFieldTime.inputView = timePickerAddNotice;
+    [_textFieldTime setInputAccessoryView:doneBarTime];
+
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+-(void)act_cancel:(id)sender
+{
+    [_textFieldDate resignFirstResponder];
+}
+
+-(void)act_doneTime:(id)sender
+{
+    self.textFieldTime.text = selctedTime;
+    [self.textFieldTime resignFirstResponder];
+}
+-(void)act_cancelTime:(id)sender
+{
+    [_textFieldTime resignFirstResponder];
+}
+-(void)act_done:(id)sender
+{
+    self.textFieldDate.text = selectedDate;
+    [self.textFieldDate resignFirstResponder];
+}
+
+-(void)dateIsChanged:(id)sender
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd/MM/yyyy"];
+    selectedDate= [dateFormat stringFromDate:[sender date]];
+}
+-(void)timeIsChanged:(id)sender
+{
+    NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
+    [timeFormat setDateFormat:@"hh:mm a"];
+    selctedTime = [timeFormat stringFromDate:[sender date]];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return true;
+}
+
+- (IBAction)buttonSend:(id)sender {
+    if (((self.textFieldDate.text.length > 0) && (self.textFieldTime.text.length>0)) && (self.textViewNotice.text.length>0)) {
+        NSLog(@"Checked");
+        
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please fill up the whole information" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+@end
