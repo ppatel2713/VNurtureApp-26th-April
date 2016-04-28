@@ -48,8 +48,6 @@
         
         NSLog(@"dictionary data%@",my_array);
         [self.batch_table reloadData];
-        
-        
     }];
     
     [postDataTask resume];
@@ -57,6 +55,18 @@
 
     // Do any additional setup after loading the view.
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BatchDetail  *batchDetail1 = [self.storyboard instantiateViewControllerWithIdentifier:@"BatchDetail"];
+    NSLog(@"Karannn%ld",(long)indexPath.row);
+    batchDetail1->id1 = indexPath.row;
+    [self presentViewController:batchDetail1 animated:YES completion:nil];
+    
+    //[self pushViewController:viewControllerB animated:YES];
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

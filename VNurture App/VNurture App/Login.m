@@ -16,6 +16,7 @@
 
 @interface Login ()
 
+
 @end
 
 @implementation Login
@@ -23,6 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self Image_View:_viewLogin];
+
+    
+    
     // Do any additional setup after loading the view.
 }
 
@@ -52,8 +56,8 @@
 
 - (IBAction)Login:(id)sender {
     
-    
-    
+    [self clearsession];
+
     if ([self.text_Username.text isEqual:@"Karan"] || [self.text_password.text isEqual:@"Karan"]) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
         
@@ -62,8 +66,17 @@
         
 
     }
-    else if([self.text_Username.text isEqual:@"HR"] || [self.text_password.text isEqual:@"HR"])
+    else if(/*[self.text_Username.text isEqual:@"HR"] || [self.text_password.text isEqual:@"HR"] || */[check isEqualToString:@"1"]==true)
     {
+        
+        
+        
+        
+        
+        
+        
+        
+        
         RootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"rootController"];
         
         [self presentViewController:vc animated:YES completion:nil];
@@ -80,13 +93,74 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalide Username or password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];
         [alert show];
 
-    }
-
-
-    
-    
-    
 }
+}
+
+-(void)clearsession
+    {
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL: [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/userfetch.php"]];
+        NSArray *data=[NSArray arrayWithObjects:_text_Username.text,_text_password.text,nil];
+        NSArray *key=[NSArray arrayWithObjects:@"email",@"password", nil];
+        
+        NSDictionary *loginData=[NSDictionary dictionaryWithObjects:data forKeys:key];
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:loginData options:0 error:0];
+        [request setHTTPMethod: @"POST"];
+        
+        [request setHTTPBody: postData];
+        clearSession = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        
+        if (clearSession) {
+            NSLog(@"data sent ");
+        } else
+        {
+            NSLog(@"Not sent");
+        }
+        
+        [clearSession start];
+        
+        
+    }
+    
+-(void)connection:(NSConnection*)conn didReceiveResponse:(NSURLResponse *)response
+    {
+        if (receivedData == NULL)
+        {
+            receivedData = [[NSMutableData alloc] init];
+        }
+        [receivedData setLength:0];
+    }
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+    {
+        [receivedData appendData:data];
+    }
+    
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+    {
+        NSLog(@"Connection failed! Error - %@ %@",
+              [error localizedDescription],
+              [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
+        
+        UIAlertView *customAlert = [[UIAlertView alloc]initWithTitle:@"No NetWork" message:@"Interet Connection is Lost" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [customAlert show];
+        
+        
+    }
+    
+    - (void)connectionDidFinishLoading:(NSURLConnection *)connection
+    {
+        
+        if (connection==clearSession)
+        {
+            
+            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:receivedData options: kNilOptions error:nil];
+            NSString *tmp=[[NSString alloc]initWithData:receivedData encoding:NSUTF8StringEncoding];
+            NSLog(@"%@", tmp);
+            NSLog(@"  parsing JSON of add checkout: %@", jsonDict);
+            NSLog(@"Result%@",[jsonDict valueForKeyPath:@"result.result"]);
+            check=[jsonDict valueForKeyPath:@"result.result"];
+            NSLog(@"%@",check);
+        }
+    }
 - (IBAction)check:(id)sender {
     
     

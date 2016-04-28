@@ -42,6 +42,45 @@ static BatchDetail *sharedInstance;
     _textFieldDate.delegate = self;
     _textFieldTime.delegate = self;
     self.textFieldTechnology.delegate = self;
+    
+    NSLog(@"Identifier%d",id1);
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/batchallfetch.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    
+    
+    NSString * post =[NSString stringWithFormat:@"lang=%@",@"English"];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO	];
+    
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+        my_array=[json valueForKey:@"batch"];
+        
+        NSLog(@"dictionary data%@",my_array[id1]);
+        
+        _textFieldBatchName.text=[my_array[id1] objectForKey:@"batchname"];
+        _textFieldDate.text=[my_array[id1] objectForKey:@"date"];
+        _textFieldTime.text=[my_array[id1] objectForKey:@"batchstarttime"];
+        
+        
+        
+        
+    }];
+    [postDataTask resume];
+
 
     // Do any additional setup after loading the view.
 }

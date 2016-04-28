@@ -1315,6 +1315,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="replyBatchDetails" destination="pJ5-s9-6d1" id="vfC-fx-WrT"/>
+                        <outlet property="textFieldBatchName" destination="ity-WG-wEy" id="AjN-Bb-Qzr"/>
                         <outlet property="textFieldDate" destination="GoQ-mA-dvB" id="q1y-aq-IEv"/>
                         <outlet property="textFieldTechnology" destination="77R-YU-Xag" id="tN6-26-2fu"/>
                         <outlet property="textFieldTime" destination="XR6-oL-T21" id="4GW-Wa-Bos"/>
