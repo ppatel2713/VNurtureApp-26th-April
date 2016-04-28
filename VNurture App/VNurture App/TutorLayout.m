@@ -71,14 +71,17 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    EditTutorDetails *EditTutorDetails1 = [[EditTutorDetails alloc] init];
-    NSLog(@"Karannn%@",indexPath);
-   // EditTutorDetails1.id1 = ;
+    EditTutorDetails *EditTutorDetails1 = [self.storyboard instantiateViewControllerWithIdentifier:@"EditTutorDetails"];
+    NSLog(@"Karannn%ld",(long)indexPath.row);
+    EditTutorDetails1->id1 = indexPath.row;
+    [self presentViewController:EditTutorDetails1 animated:YES completion:nil];
+
     //[self pushViewController:viewControllerB animated:YES];
 
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     static NSString *CellIdentifier = @"Cell";
     cell= [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)

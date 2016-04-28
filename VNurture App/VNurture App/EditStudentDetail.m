@@ -24,6 +24,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    NSLog(@"Identifier%d",id1);
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/studentallfetch.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    
+    
+    NSString * post =[NSString stringWithFormat:@"lang=%@",@"English"];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO	];
+    
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+        my_array=[json valueForKey:@"students"];
+        
+        NSLog(@"dictionary data%@",my_array[id1]);
+        
+        _textFieldCollege.text=[my_array[id1] objectForKey:@"yearschool"];
+        _textFieldDate.text=[my_array[id1] objectForKey:@"dob"];
+        _textFieldEmailID.text=[my_array[id1] objectForKey:@"email"];
+        _textFieldName.text=[my_array[id1] objectForKey:@"firstname"];
+        _textFieldPhoneNo=[my_array[id1] objectForKey:@"phone"];
+        _textFieldUniversity=[my_array[id1] objectForKey:@"university"];
+    
+        
+        
+    }];
+    [postDataTask resume];
+
+    
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:
                               _viewEditStudent.frame];
     [imageView setImage:[UIImage imageNamed:@"bg.png"]];

@@ -2135,8 +2135,15 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="textFieldCollege" destination="OCX-JZ-WYw" id="SUZ-xB-ada"/>
+                        <outlet property="textFieldCourse" destination="MaH-9X-IpX" id="iMT-81-7kB"/>
                         <outlet property="textFieldDate" destination="4Gg-0Q-Vcx" id="7dJ-b4-DNc"/>
-                        <outlet property="textFieldTechnology" destination="wEo-sQ-p01" id="fwg-5M-LDa"/>
+                        <outlet property="textFieldEmailID" destination="OX8-UD-A0g" id="2nW-Ay-Zp5"/>
+                        <outlet property="textFieldName" destination="Cfg-qe-Ns3" id="xq1-G6-hqv"/>
+                        <outlet property="textFieldPhoneNo" destination="ugL-Vj-D16" id="pMn-lF-uTl"/>
+                        <outlet property="textFieldTechnology" destination="wEo-sQ-p01" id="ueO-02-jDT"/>
+                        <outlet property="textFieldUniversity" destination="jsF-uo-BlU" id="ahM-4N-MWS"/>
+                        <outlet property="textViewAddress" destination="M8j-4n-bmk" id="6sB-I3-CJX"/>
                         <outlet property="viewEditStudent" destination="9RS-RH-r7m" id="Byn-Cz-HrT"/>
                     </connections>
                 </viewController>
@@ -2357,8 +2364,16 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="btnCancel" destination="cUA-VL-2aE" id="6sv-UD-c2f"/>
+                        <outlet property="btnSubmit" destination="f1m-py-pBQ" id="ll1-mm-nAt"/>
+                        <outlet property="textFieldCompanyName" destination="Pyn-6B-WOD" id="zbk-ub-7Yq"/>
                         <outlet property="textFieldDate" destination="yUN-vh-A2C" id="fyI-2M-FJv"/>
+                        <outlet property="textFieldEmailID" destination="fN3-fg-AgA" id="9aZ-He-AiK"/>
+                        <outlet property="textFieldExperience" destination="dP7-oT-pRf" id="bbp-wu-YSl"/>
+                        <outlet property="textFieldName" destination="XJe-G6-F6Z" id="YzR-gI-cnv"/>
+                        <outlet property="textFieldPhoneNo" destination="0Kg-l6-qMd" id="Td0-QJ-Fzy"/>
                         <outlet property="textFieldTechnology" destination="ifX-85-SJB" id="TOP-CF-62x"/>
+                        <outlet property="textViewAddress" destination="tf4-p9-wlq" id="t1j-au-RYw"/>
                         <outlet property="viewEditTutor" destination="QgD-cK-NhN" id="DW0-Se-1vd"/>
                     </connections>
                 </viewController>

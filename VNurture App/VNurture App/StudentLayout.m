@@ -10,6 +10,7 @@
 #import "EditStudentDetail.h"
 #import "EditPaymentDetail.h"
 #import "FirstViewController.h"
+#import "StudentLayout.h"
 @interface StudentLayout ()
 
 @end
@@ -66,6 +67,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    EditStudentDetail  *EditStudentDetails1 = [self.storyboard instantiateViewControllerWithIdentifier:@"EditStudentDetail"];
+    NSLog(@"Karannn%ld",(long)indexPath.row);
+    EditStudentDetails1->id1 = indexPath.row;
+    [self presentViewController:EditStudentDetails1 animated:YES completion:nil];
+    
+    //[self pushViewController:viewControllerB animated:YES];
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

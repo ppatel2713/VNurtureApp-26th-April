@@ -23,6 +23,70 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"Identifier%d",id1);
+    
+    
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSURL *url = [NSURL URLWithString:@"http://rapidans.esy.es/finalvnurture/tutorallfetch.php"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    
+    
+    NSString * post =[NSString stringWithFormat:@"lang=%@",@"English"];
+    
+    NSData *postData = [post dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO	];
+    
+    [request setHTTPBody:postData];
+    
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        
+       my_array=[json valueForKey:@"tutors"];
+        
+        NSLog(@"dictionary data%@",my_array[id1]);
+        
+        
+        
+        _textFieldName.text=[my_array[id1] objectForKey:@"firstname"];
+        _textFieldDate.text=[my_array [id1] objectForKey:@"dob"];
+        _textFieldCompanyName.text=[my_array[id1] objectForKey:@"compney"];
+        _textFieldEmailID.text=[my_array[id1] objectForKey:@"email"];
+        _textFieldPhoneNo.text=[my_array[id1] objectForKey:@"phone"];
+        _textFieldExperience.text=[my_array[id1] objectForKey:@"experience"];
+       // [_textViewAddress setText:[my_array[id1] objectForKey:@"address"]];
+    
+    }];
+    NSLog(@"Json%@",json);
+    
+    
+    
+    
+    [postDataTask resume];
+
+    
+    NSLog(@"Array%@",my_array);
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:_viewEditTutor.frame];
     [imageView setImage:[UIImage imageNamed:@"bg.png"]];
     [imageView setContentMode:UIViewContentModeScaleToFill];
