@@ -20,11 +20,13 @@
 @end
 
 @implementation Login
-
+@synthesize check;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self Image_View:_viewLogin];
-
+    constant=@"1";
+    NSLog(@"constant%@",constant);
+    check=@"";
     
     
     // Do any additional setup after loading the view.
@@ -57,7 +59,9 @@
 - (IBAction)Login:(id)sender {
     
     [self clearsession];
-
+    
+    
+    //NSLog(@"checked%hhd",[check isEqualToString:@"1"]);
     if ([self.text_Username.text isEqual:@"Karan"] || [self.text_password.text isEqual:@"Karan"]) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
         
@@ -66,17 +70,9 @@
         
 
     }
-    else if(/*[self.text_Username.text isEqual:@"HR"] || [self.text_password.text isEqual:@"HR"] || */[check isEqualToString:@"1"]==true)
+    else if([check isEqual:@"1"])
     {
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         RootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"rootController"];
         
         [self presentViewController:vc animated:YES completion:nil];
@@ -159,6 +155,13 @@
             NSLog(@"Result%@",[jsonDict valueForKeyPath:@"result.result"]);
             check=[jsonDict valueForKeyPath:@"result.result"];
             NSLog(@"%@",check);
+            int a=[check intValue];
+            NSLog(@"Integer value%d",a);
+            if ([check isEqual:@"1"] ) {
+                NSLog(@"Prachi");
+            }
+    
+            
         }
     }
 - (IBAction)check:(id)sender {
