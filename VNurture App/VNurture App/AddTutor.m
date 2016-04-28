@@ -268,9 +268,6 @@
         
         NSArray *data=[NSArray arrayWithObjects:_textFieldName.text,_textFieldDOB.text,_textFieldEmailId.text,_textFieldGender.text,_textFieldPassword.text,_textFieldPhoneNumber.text,_textFieldAddress.text,@"Tutor",_textFieldCompanyName.text,nil];
         NSArray *key=[NSArray arrayWithObjects:@"firstname",@"dob",@"email",@"gender",@"password",@"phone",@"address",@"role",@"compney", nil];
-        
-        
-        
         NSDictionary *tutorData=[NSDictionary dictionaryWithObjects:data forKeys:key];
         NSData *postData = [NSJSONSerialization dataWithJSONObject:tutorData options:0 error:&error];
         [request setHTTPBody:postData];

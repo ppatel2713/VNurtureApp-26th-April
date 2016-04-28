@@ -48,8 +48,6 @@
         
         NSLog(@"dictionary data%@",my_array);
         [self.batch_table reloadData];
-        
-        
     }];
     
     [postDataTask resume];
