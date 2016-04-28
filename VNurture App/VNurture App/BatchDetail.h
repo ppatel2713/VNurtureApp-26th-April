@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-<<<<<<< HEAD
-@interface BatchDetail : UIViewController<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface BatchDetail : UIViewController<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource,NSURLSessionDelegate>
 {
     @public
     int id1;
@@ -18,9 +17,6 @@
 }
 
 
-=======
-@interface BatchDetail : UIViewController<UITextFieldDelegate>
->>>>>>> origin/master
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *replyBatchDetails;
 - (IBAction)replyBatchDetail:(id)sender;
 

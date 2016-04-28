@@ -72,7 +72,7 @@ static BatchDetail *sharedInstance;
         NSLog(@"dictionary data%@",my_array[id1]);
         
         _textFieldBatchName.text=[my_array[id1] objectForKey:@"batchname"];
-        _textFieldDate.text=[my_array[id1] objectForKey:@"date"];
+        _textFieldDate.text=[my_array[id1] objectForKey:@"dob"];
         _textFieldTime.text=[my_array[id1] objectForKey:@"batchstarttime"];
         
         
