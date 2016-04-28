@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BatchDetail : UIViewController<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource,NSURLSessionDelegate>
+@interface BatchDetail : UIViewController<UITextFieldDelegate,NSURLSessionDelegate>
 {
     @public
     int id1;
