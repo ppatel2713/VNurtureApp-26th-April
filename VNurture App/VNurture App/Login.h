@@ -14,6 +14,9 @@
     NSURLConnection *clearSession;
     NSMutableData *receivedData;
     NSString *constant;
+    NSArray *role,*wsrole,*tutorarray,*studentarray;
+
+
     
 
 }
@@ -21,7 +24,11 @@
 - (IBAction)Login:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *text_Username;
 @property (weak, nonatomic) IBOutlet UITextField *text_password;
-@property(weak,nonatomic) NSString *check;
+@property(strong,nonatomic) NSMutableArray *check;
+@property(strong,nonatomic) NSMutableArray *check1;
+@property(strong,nonatomic) NSMutableArray *status;
+
+
 - (IBAction)check:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *viewLogin;
 -(void)clearsession;

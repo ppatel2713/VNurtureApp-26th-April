@@ -20,14 +20,19 @@
 @end
 
 @implementation Login
-@synthesize check;
+@synthesize check,check1,status;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self Image_View:_viewLogin];
     constant=@"1";
     NSLog(@"constant%@",constant);
-    check=@"";
-    
+    role=[[NSArray alloc]initWithObjects:@"1",@"3",@"4", nil];
+    check1=[[NSMutableArray alloc]initWithObjects:@"1", nil];
+    tutorarray=[[NSMutableArray alloc]initWithObjects:@"3", nil];
+    studentarray=[[NSMutableArray alloc]initWithObjects:@"4", nil];
+
+
+    NSLog(@"Check1%@",check1);
     
     // Do any additional setup after loading the view.
 }
@@ -59,38 +64,10 @@
 - (IBAction)Login:(id)sender {
     
     [self clearsession];
-    
-    
-    //NSLog(@"checked%hhd",[check isEqualToString:@"1"]);
-    if ([self.text_Username.text isEqual:@"Karan"] || [self.text_password.text isEqual:@"Karan"]) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
-        
-        StudentRootViewController *sr1=[storyboard instantiateViewControllerWithIdentifier:@"StudentRootViewController"];
-        [self presentViewController:sr1 animated:YES completion:nil];
-        
 
-    }
-    else if([check isEqual:@"1"])
-    {
-
-        RootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"rootController"];
-        
-        [self presentViewController:vc animated:YES completion:nil];
-    }
-    else if ([self.text_Username.text isEqual:@"Vihas"] || [self.text_password.text isEqual:@"Vihas"]) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Tutor" bundle:nil];
-        
-        TutorRootViewController *tr1=[storyboard instantiateViewControllerWithIdentifier:@"TutorRootViewController"];
-        [self presentViewController:tr1 animated:YES completion:nil];
-        
-        
-    }
-    else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalide Username or password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];
-        [alert show];
 
 }
-}
+
 
 -(void)clearsession
     {
@@ -113,6 +90,8 @@
         }
         
         [clearSession start];
+        
+
         
         
     }
@@ -154,16 +133,56 @@
             NSLog(@"  parsing JSON of add checkout: %@", jsonDict);
             NSLog(@"Result%@",[jsonDict valueForKeyPath:@"result.result"]);
             check=[jsonDict valueForKeyPath:@"result.result"];
-            NSLog(@"%@",check);
-            int a=[check intValue];
-            NSLog(@"Integer value%d",a);
-            if ([check isEqual:@"1"] ) {
-                NSLog(@"Prachi");
-            }
-    
+            status=[jsonDict valueForKeyPath:@"login.status"];
+            NSLog(@"status%@",status);
+            wsrole=[jsonDict valueForKeyPath:@"login.roleid"];
+            NSLog(@"Role%@",wsrole);
+
+            NSNumber *number=[NSNumber numberWithInt:1];
+            int i=0;
             
+            NSLog(@"checking%d",[check objectAtIndex:i]==number);
+            NSLog(@"checking%d",[status isEqualToArray:check1]);
+
+            if([check objectAtIndex:i]==number)
+            {
+                if ([status isEqualToArray:check1])
+                {
+                    if ([wsrole isEqualToArray:check1]) {
+                        RootViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"rootController"];
+                        
+                        [self presentViewController:vc animated:YES completion:nil];
+
+                    }
+                    else if ([wsrole isEqualToArray:tutorarray])
+                    {
+                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Tutor" bundle:nil];
+                        
+                        TutorRootViewController *tr1=[storyboard instantiateViewControllerWithIdentifier:@"TutorRootViewController"];
+                        [self presentViewController:tr1 animated:YES completion:nil];
+                        
+                    }
+                    else if ([wsrole isEqualToArray:studentarray])
+                    {
+                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Student" bundle:nil];
+                        
+                        StudentRootViewController *sr1=[storyboard instantiateViewControllerWithIdentifier:@"StudentRootViewController"];
+                        [self presentViewController:sr1 animated:YES completion:nil];
+                        
+                    }
+                    else{
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Invalide Username or password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];
+                        [alert show];
+                    }
+                    
+
+                }
+            }
         }
+            
+
     }
+    
 - (IBAction)check:(id)sender {
     
     
