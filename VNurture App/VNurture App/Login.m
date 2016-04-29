@@ -141,8 +141,6 @@
             NSNumber *number=[NSNumber numberWithInt:1];
             int i=0;
             
-            NSLog(@"checking%d",[check objectAtIndex:i]==number);
-            NSLog(@"checking%d",[status isEqualToArray:check1]);
 
             if([check objectAtIndex:i]==number)
             {
